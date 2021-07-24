@@ -44,7 +44,7 @@ class _CameraScreenState extends State<CameraScreen> {
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             return Container(
-              height: MediaQuery.of(context).size.height,
+              height: MediaQuery.of(context).size.width * 16 / 9,
               width: MediaQuery.of(context).size.width,
               child: CameraPreview(_cameraController!),
             );
@@ -74,13 +74,13 @@ class _CameraScreenState extends State<CameraScreen> {
     return Scaffold(
       backgroundColor: Colors.black87,
       body: SafeArea(
-        child: Stack(children: [
-          _cameraPreview(),
-          Positioned(
-            child: Container(
+        child: Column(children: [
+          Stack(children: [
+            _cameraPreview(),
+            Container(
               padding:
                   const EdgeInsets.symmetric(vertical: 15.0, horizontal: 15.0),
-              color: Colors.black,
+              color: Colors.black12,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -124,100 +124,97 @@ class _CameraScreenState extends State<CameraScreen> {
                 ],
               ),
             ),
-          ),
-          Positioned(
-            bottom: 0,
-            child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 15.0),
-              width: MediaQuery.of(context).size.width,
-              color: Colors.black,
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      GestureDetector(
-                        onTap: () {},
-                        child: Container(
-                          height: 50.0,
-                          width: 50.0,
-                          decoration: BoxDecoration(
-                            border: Border.all(width: 3.0, color: Colors.white),
-                            shape: BoxShape.circle,
-                            image: DecorationImage(
-                                image: NetworkImage(
-                                    "https://cdn.pixabay.com/photo/2016/05/05/02/37/sunset-1373171__340.jpg")),
-                          ),
+          ]),
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 5.0),
+            width: MediaQuery.of(context).size.width,
+            color: Colors.black,
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    GestureDetector(
+                      onTap: () {},
+                      child: Container(
+                        height: 50.0,
+                        width: 50.0,
+                        decoration: BoxDecoration(
+                          border: Border.all(width: 3.0, color: Colors.white),
+                          shape: BoxShape.circle,
+                          image: DecorationImage(
+                              image: NetworkImage(
+                                  "https://cdn.pixabay.com/photo/2016/05/05/02/37/sunset-1373171__340.jpg")),
                         ),
                       ),
-                      GestureDetector(
-                        onLongPress: () async {
-                          await _cameraController!.startVideoRecording();
-                          setState(() {
-                            isRecording = true;
-                          });
-                        },
-                        onLongPressUp: () async {
-                          XFile videoPath =
-                              await _cameraController!.stopVideoRecording();
-                          setState(() {
-                            isRecording = false;
-                          });
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (builder) => VideoView(
-                                path: videoPath.path,
-                              ),
+                    ),
+                    GestureDetector(
+                      onLongPress: () async {
+                        await _cameraController!.startVideoRecording();
+                        setState(() {
+                          isRecording = true;
+                        });
+                      },
+                      onLongPressUp: () async {
+                        XFile videoPath =
+                            await _cameraController!.stopVideoRecording();
+                        setState(() {
+                          isRecording = false;
+                        });
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (builder) => VideoView(
+                              path: videoPath.path,
                             ),
-                          );
-                        },
-                        onTap: () {
-                          if (!isRecording) {
-                            takePhoto(context);
-                          }
-                        },
-                        child: isRecording
-                            ? Icon(
-                                Icons.radio_button_on,
-                                color: Colors.red,
-                                size: 80.0,
-                              )
-                            : Icon(
-                                Icons.panorama_fish_eye_outlined,
-                                color: Colors.white,
-                                size: 80.0,
-                              ),
+                          ),
+                        );
+                      },
+                      onTap: () {
+                        if (!isRecording) {
+                          takePhoto(context);
+                        }
+                      },
+                      child: isRecording
+                          ? Icon(
+                              Icons.radio_button_on,
+                              color: Colors.red,
+                              size: 80.0,
+                            )
+                          : Icon(
+                              Icons.panorama_fish_eye_outlined,
+                              color: Colors.white,
+                              size: 80.0,
+                            ),
+                    ),
+                    GestureDetector(
+                      onTap: () async {
+                        setState(() {
+                          isCameraFront = !isCameraFront;
+                          transform = transform + pi;
+                        });
+                        int cameraPos = isCameraFront ? 0 : 1;
+                        _cameraController = CameraController(
+                            cameras![cameraPos], ResolutionPreset.high);
+                        cameraValue = _cameraController!.initialize();
+                      },
+                      child: Icon(
+                        Icons.flip_camera_android,
+                        color: Colors.white,
+                        size: 30.0,
                       ),
-                      GestureDetector(
-                        onTap: () async {
-                          setState(() {
-                            isCameraFront = !isCameraFront;
-                            transform = transform + pi;
-                          });
-                          int cameraPos = isCameraFront ? 0 : 1;
-                          _cameraController = CameraController(
-                              cameras![cameraPos], ResolutionPreset.high);
-                          cameraValue = _cameraController!.initialize();
-                        },
-                        child: Icon(
-                          Icons.flip_camera_android,
-                          color: Colors.white,
-                          size: 30.0,
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 4.0,
-                  ),
-                  Text(
-                    "Hold for the Video, Tap for the Photo",
-                    style: TextStyle(color: Colors.white),
-                    textAlign: TextAlign.center,
-                  ),
-                ],
-              ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 4.0,
+                ),
+                Text(
+                  "Hold for the Video, Tap for the Photo",
+                  style: TextStyle(color: Colors.white),
+                  textAlign: TextAlign.center,
+                ),
+              ],
             ),
           ),
         ]),
