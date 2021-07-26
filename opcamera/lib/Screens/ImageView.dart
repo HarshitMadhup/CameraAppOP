@@ -38,7 +38,7 @@ class _ImageViewState extends State<ImageView> {
                   Container(
                     width: 250.0,
                     child: Text(
-                      "$widget.path",
+                      "${widget.path}",
                       style: TextStyle(fontSize: 12.0, color: Colors.white),
                       textAlign: TextAlign.left,
                     ),

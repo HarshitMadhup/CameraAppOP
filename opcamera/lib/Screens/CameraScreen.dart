@@ -25,6 +25,7 @@ class _CameraScreenState extends State<CameraScreen> {
   bool isCameraFront = true;
   bool flash = false;
   double transform = 0;
+  double zoom = 0.0;
 
   @override
   void initState() {
@@ -72,15 +73,14 @@ class _CameraScreenState extends State<CameraScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black87,
+      backgroundColor: Colors.black,
       body: SafeArea(
         child: Column(children: [
           Stack(children: [
             _cameraPreview(),
             Container(
               padding:
-                  const EdgeInsets.symmetric(vertical: 15.0, horizontal: 15.0),
-              color: Colors.black12,
+                  const EdgeInsets.symmetric(vertical: 15.0, horizontal: 30.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -124,9 +124,27 @@ class _CameraScreenState extends State<CameraScreen> {
                 ],
               ),
             ),
+            Positioned(
+              bottom: 0,
+              left: MediaQuery.of(context).size.shortestSide / 4,
+              child: Slider(
+                value: zoom,
+                activeColor: Colors.black,
+                inactiveColor: Colors.white,
+                onChanged: (value) {
+                  value = value * 10;
+                  if (value <= 8.0 && value >= 1.0) {
+                    _cameraController!.setZoomLevel(value);
+                  }
+                  setState(() {
+                    zoom = value / 10;
+                  });
+                },
+              ),
+            ),
           ]),
           Container(
-            padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 5.0),
+            padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 10.0),
             width: MediaQuery.of(context).size.width,
             color: Colors.black,
             child: Column(
@@ -207,7 +225,7 @@ class _CameraScreenState extends State<CameraScreen> {
                   ],
                 ),
                 SizedBox(
-                  height: 4.0,
+                  height: 8.0,
                 ),
                 Text(
                   "Hold for the Video, Tap for the Photo",
