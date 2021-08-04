@@ -30,6 +30,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   camera: ^0.8.1+5
   path_provider: ^2.0.2
+  photofilters: ^3.0.1
+  image_picker: ^0.8.3
   path:
   video_player: ^2.1.10
 
