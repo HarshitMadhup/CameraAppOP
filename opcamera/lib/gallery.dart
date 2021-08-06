@@ -1,10 +1,14 @@
-import 'package:camera_op/screens/albums_op.dart';
-import 'package:camera_op/screens/categories_op.dart';
-import 'package:camera_op/screens/favourites_op.dart';
+import './screens/albums_op.dart';
+import './screens/categories_op.dart';
+import './screens/favourites_op.dart';
 import 'package:flutter/material.dart';
+import 'package:opcamera/Screens/favourites_op.dart';
+
+import 'Screens/albums_op.dart';
+import 'Screens/categories_op.dart';
 
 class MyStatefulWidget extends StatefulWidget {
-  const MyStatefulWidget({Key key}) : super(key: key);
+  const MyStatefulWidget();
 
   @override
   State<MyStatefulWidget> createState() => _MyStatefulWidgetState();

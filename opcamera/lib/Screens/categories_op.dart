@@ -1,33 +1,34 @@
 import 'package:flutter/material.dart';
 
 class CategoriesOp extends StatefulWidget {
-  const CategoriesOp({Key key}) : super(key: key);
+  const CategoriesOp();
 
   @override
   _CategoriesOpState createState() => _CategoriesOpState();
 }
 
 class _CategoriesOpState extends State<CategoriesOp> {
-
-  createNewFolder(BuildContext context){
+  createNewFolder(BuildContext context) {
     TextEditingController myController = TextEditingController();
 
-    return showDialog(context: context, builder: (context){
-      return AlertDialog(
-       title: Text("Please enter the name of the new folder"),
-        content: TextField(
-          controller: myController,
-        ),
-        actions: [
-          MaterialButton(
-            child: Text("Submit"),
-            onPressed: (){
-              Navigator.of(context).pop(myController.text.toString());
-            },
-          )
-        ],
-      );
-    });
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text("Please enter the name of the new folder"),
+            content: TextField(
+              controller: myController,
+            ),
+            actions: [
+              MaterialButton(
+                child: Text("Submit"),
+                onPressed: () {
+                  Navigator.of(context).pop(myController.text.toString());
+                },
+              )
+            ],
+          );
+        });
   }
 
   @override
@@ -42,7 +43,7 @@ class _CategoriesOpState extends State<CategoriesOp> {
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
-        onPressed: (){
+        onPressed: () {
           createNewFolder(context);
         },
       ),

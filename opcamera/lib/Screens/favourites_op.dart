@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class FavouritesOp extends StatefulWidget {
-  const FavouritesOp({Key key}) : super(key: key);
+  const FavouritesOp();
 
   @override
   _FavouritesOpState createState() => _FavouritesOpState();
