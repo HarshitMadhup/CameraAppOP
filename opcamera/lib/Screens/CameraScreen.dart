@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:opcamera/gallery.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -76,42 +77,6 @@ class _CameraScreenState extends State<CameraScreen> {
       ),
     );
   }
-
-  // Future<String> takePicture() async {
-  //   if (!_cameraController!.value.isInitialized) {
-  //     showInSnackBar('Error: select a camera first.');
-  //     return null;
-  //   }
-  //   final PermissionStatus writeAccess = await Permission.storage.request();
-
-  //   Directory extDir;
-  //   // if user disagrees to allow storage access the use app storage
-  //   if (writeAccess.isGranted) {
-  //     extDir = await getExternalStorageDirectory();
-  //   } else {
-  //     extDir = await getApplicationDocumentsDirectory();
-  //   }
-  //   final String dirPath = '${extDir.path}/Pictures/pics';
-  //   await new Directory(dirPath).create(recursive: true);
-  //   final String filePath = '$dirPath/${timestamp()}.jpg';
-
-  //   if (_cameraController!.value.isTakingPicture) {
-  //     // A capture is already pending, do nothing.
-  //     return null;
-  //   }
-
-  //   try {
-  //     await _ccameraController!takePicture(filePath);
-  //   } on CameraException catch (e) {
-  //     print('Exception -> $e');
-  //     return null;
-  //   }
-  //   final File makeFile = new File(filePath);
-  //   setState(() {
-  //     imageList.add(makeFile.absolute.path);
-  //   });
-  //   return filePath;
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -196,7 +161,14 @@ class _CameraScreenState extends State<CameraScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (builder) => MyStatefulWidget(),
+                          ),
+                        );
+                      },
                       child: Container(
                         height: 50.0,
                         width: 50.0,
@@ -222,6 +194,8 @@ class _CameraScreenState extends State<CameraScreen> {
                         setState(() {
                           isRecording = false;
                         });
+                        GallerySaver.saveVideo(videoPath.path)
+                            .then((bool? sucess) => print("Success"));
                         Navigator.push(
                           context,
                           MaterialPageRoute(
