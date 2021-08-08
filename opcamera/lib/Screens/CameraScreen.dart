@@ -7,6 +7,7 @@ import 'package:path_provider/path_provider.dart';
 
 import 'ImageView.dart';
 import 'VideoView.dart';
+import 'package:gallery_saver_safety/gallery_saver_safety.dart';
 
 List<CameraDescription>? cameras;
 
@@ -56,10 +57,16 @@ class _CameraScreenState extends State<CameraScreen> {
       );
 
   void takePhoto(BuildContext context) async {
-    final path =
-        join((await getTemporaryDirectory()).path, "${DateTime.now()}.png");
+    final path = join((await getApplicationDocumentsDirectory()).path,
+        "${DateTime.now()}.png");
     XFile picture = await _cameraController!.takePicture();
     picture.saveTo(path);
+    GallerySaver.saveImage(
+      picture.path,
+    ).then((bool? success) {
+      print("success");
+    });
+
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -69,6 +76,42 @@ class _CameraScreenState extends State<CameraScreen> {
       ),
     );
   }
+
+  // Future<String> takePicture() async {
+  //   if (!_cameraController!.value.isInitialized) {
+  //     showInSnackBar('Error: select a camera first.');
+  //     return null;
+  //   }
+  //   final PermissionStatus writeAccess = await Permission.storage.request();
+
+  //   Directory extDir;
+  //   // if user disagrees to allow storage access the use app storage
+  //   if (writeAccess.isGranted) {
+  //     extDir = await getExternalStorageDirectory();
+  //   } else {
+  //     extDir = await getApplicationDocumentsDirectory();
+  //   }
+  //   final String dirPath = '${extDir.path}/Pictures/pics';
+  //   await new Directory(dirPath).create(recursive: true);
+  //   final String filePath = '$dirPath/${timestamp()}.jpg';
+
+  //   if (_cameraController!.value.isTakingPicture) {
+  //     // A capture is already pending, do nothing.
+  //     return null;
+  //   }
+
+  //   try {
+  //     await _ccameraController!takePicture(filePath);
+  //   } on CameraException catch (e) {
+  //     print('Exception -> $e');
+  //     return null;
+  //   }
+  //   final File makeFile = new File(filePath);
+  //   setState(() {
+  //     imageList.add(makeFile.absolute.path);
+  //   });
+  //   return filePath;
+  // }
 
   @override
   Widget build(BuildContext context) {

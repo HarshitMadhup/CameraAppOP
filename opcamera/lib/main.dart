@@ -36,7 +36,7 @@ class _CameraHomeState extends State<CameraHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: MyStatefulWidget(),
+      body: CameraScreen(),
     );
   }
 }
