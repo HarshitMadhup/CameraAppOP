@@ -14,7 +14,7 @@ class _FavouritesOpState extends State<FavouritesOp> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Favourites"),
-        backgroundColor: Colors.pink[800],
+        backgroundColor: Colors.black,
       ),
       body: Center(
         child: Container(),

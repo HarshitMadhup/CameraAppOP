@@ -33,7 +33,8 @@ dependencies:
   path:
   video_player: 
   permission_handler: ^8.0.0+1
-  gallery_saver_safety: 
+  gallery_saver_safety:
+  photo_manager:  
 
 
 dev_dependencies:

@@ -36,12 +36,13 @@ class _CategoriesOpState extends State<CategoriesOp> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Categories"),
-        backgroundColor: Colors.pink[800],
+        backgroundColor: Colors.black,
       ),
       body: Center(
         child: Container(),
       ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.black,
         child: Icon(Icons.add),
         onPressed: () {
           createNewFolder(context);

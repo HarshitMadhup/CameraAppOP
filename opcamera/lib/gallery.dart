@@ -23,7 +23,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: currentIndex,
-        backgroundColor: Colors.yellow[300],
+        backgroundColor: Colors.black,
         onTap: (index) => setState(() => currentIndex = index),
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
@@ -39,7 +39,8 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
             label: 'Favourites',
           ),
         ],
-        selectedItemColor: Colors.blueAccent,
+        selectedItemColor: Colors.white,
+        unselectedItemColor: Colors.grey,
       ),
     );
   }
