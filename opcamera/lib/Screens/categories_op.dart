@@ -23,7 +23,7 @@ class _CategoriesOpState extends State<CategoriesOp> {
               MaterialButton(
                 child: Text("Submit"),
                 onPressed: () {
-                  Navigator.of(context).pop(myController.text.toString());
+                  Navigator.of(context).pop();
                 },
               )
             ],

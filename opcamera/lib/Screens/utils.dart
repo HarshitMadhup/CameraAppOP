@@ -1,33 +1,23 @@
+import 'dart:io';
 
-// import 'dart:io';
+import 'package:path_provider/path_provider.dart';
 
-// import 'package:flutter/material.dart';
+class AppUtil {
+  static Future<String> createFolderInAppDocDir(String folderName) async {
+    //Get this App Document Directory
+    final Directory _appDocDir = await getApplicationDocumentsDirectory();
+    //App Document Directory + folder name
+    final Directory _appDocDirFolder =
+        Directory('${_appDocDir.path}/$folderName/');
 
-// import 'package:permission_handler/permission_handler.dart';
-
-// class Utils {
-//   static Future<bool> checkWritePermission() async {
-
-//     if(Platform.isIOS){
-//       return false;
-//     }
-//     bool permission = false;
-//     await Permission.
-
-//         .checkPermission(Permission.WriteExternalStorage)
-//         .then((bool checkOkay) {
-//       if (!checkOkay) {
-//         SimplePermissions
-//             .requestPermission(Permission.WriteExternalStorage)
-//             .then((bool okDone) {
-//           if (okDone) {
-//             permission = true;
-//           }
-//         });
-//       } else {
-//         permission = true;
-//       }
-//     });
-//     return permission;
-//   }
-// }
+    if (await _appDocDirFolder.exists()) {
+      //if folder already exists return path
+      return _appDocDirFolder.path;
+    } else {
+      //if folder not exists create folder and then return its path
+      final Directory _appDocDirNewFolder =
+          await _appDocDirFolder.create(recursive: true);
+      return _appDocDirNewFolder.path;
+    }
+  }
+}
