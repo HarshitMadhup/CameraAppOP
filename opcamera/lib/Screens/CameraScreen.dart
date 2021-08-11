@@ -1,3 +1,4 @@
+// @dart=2.9
 import 'dart:math';
 
 import 'package:camera/camera.dart';
@@ -10,20 +11,20 @@ import 'ImageView.dart';
 import 'VideoView.dart';
 import 'package:gallery_saver_safety/gallery_saver_safety.dart';
 
-List<CameraDescription>? cameras;
+List<CameraDescription> cameras;
 
 class CameraScreen extends StatefulWidget {
-  const CameraScreen({Key? key}) : super(key: key);
+  const CameraScreen({Key key}) : super(key: key);
 
   @override
   _CameraScreenState createState() => _CameraScreenState();
 }
 
 class _CameraScreenState extends State<CameraScreen> {
-  CameraController? _cameraController;
-  Future<void>? cameraValue;
+  CameraController _cameraController;
+  Future<void> cameraValue;
   bool isRecording = false;
-  XFile? videoFile;
+  XFile videoFile;
   bool isCameraFront = true;
   bool flash = false;
   double transform = 0;
@@ -32,13 +33,13 @@ class _CameraScreenState extends State<CameraScreen> {
   @override
   void initState() {
     super.initState();
-    _cameraController = CameraController(cameras![0], ResolutionPreset.high);
-    cameraValue = _cameraController!.initialize();
+    _cameraController = CameraController(cameras[0], ResolutionPreset.high);
+    cameraValue = _cameraController.initialize();
   }
 
   @override
   void dispose() {
-    _cameraController!.dispose();
+    _cameraController.dispose();
     super.dispose();
   }
 
@@ -49,7 +50,7 @@ class _CameraScreenState extends State<CameraScreen> {
             return Container(
               height: MediaQuery.of(context).size.width * 16 / 9,
               width: MediaQuery.of(context).size.width,
-              child: CameraPreview(_cameraController!),
+              child: CameraPreview(_cameraController),
             );
           } else {
             return Center(child: CircularProgressIndicator());
@@ -60,11 +61,11 @@ class _CameraScreenState extends State<CameraScreen> {
   void takePhoto(BuildContext context) async {
     final path = join((await getApplicationDocumentsDirectory()).path,
         "${DateTime.now()}.png");
-    XFile picture = await _cameraController!.takePicture();
+    XFile picture = await _cameraController.takePicture();
     picture.saveTo(path);
     GallerySaver.saveImage(
       picture.path,
-    ).then((bool? success) {
+    ).then((bool success) {
       print("success");
     });
 
@@ -106,8 +107,8 @@ class _CameraScreenState extends State<CameraScreen> {
                         flash = !flash;
                       });
                       flash
-                          ? _cameraController!.setFlashMode(FlashMode.torch)
-                          : _cameraController!.setFlashMode(FlashMode.off);
+                          ? _cameraController.setFlashMode(FlashMode.torch)
+                          : _cameraController.setFlashMode(FlashMode.off);
                     },
                     child: flash
                         ? Icon(
@@ -142,7 +143,7 @@ class _CameraScreenState extends State<CameraScreen> {
                 onChanged: (value) {
                   value = value * 10;
                   if (value <= 8.0 && value >= 1.0) {
-                    _cameraController!.setZoomLevel(value);
+                    _cameraController.setZoomLevel(value);
                   }
                   setState(() {
                     zoom = value / 10;
@@ -183,19 +184,19 @@ class _CameraScreenState extends State<CameraScreen> {
                     ),
                     GestureDetector(
                       onLongPress: () async {
-                        await _cameraController!.startVideoRecording();
+                        await _cameraController.startVideoRecording();
                         setState(() {
                           isRecording = true;
                         });
                       },
                       onLongPressUp: () async {
                         XFile videoPath =
-                            await _cameraController!.stopVideoRecording();
+                            await _cameraController.stopVideoRecording();
                         setState(() {
                           isRecording = false;
                         });
                         GallerySaver.saveVideo(videoPath.path)
-                            .then((bool? sucess) => print("Success"));
+                            .then((bool sucess) => print("Success"));
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -230,8 +231,8 @@ class _CameraScreenState extends State<CameraScreen> {
                         });
                         int cameraPos = isCameraFront ? 0 : 1;
                         _cameraController = CameraController(
-                            cameras![cameraPos], ResolutionPreset.high);
-                        cameraValue = _cameraController!.initialize();
+                            cameras[cameraPos], ResolutionPreset.high);
+                        cameraValue = _cameraController.initialize();
                       },
                       child: Icon(
                         Icons.flip_camera_android,
@@ -240,9 +241,6 @@ class _CameraScreenState extends State<CameraScreen> {
                       ),
                     ),
                   ],
-                ),
-                SizedBox(
-                  height: 8.0,
                 ),
                 Text(
                   "Hold for the Video, Tap for the Photo",
