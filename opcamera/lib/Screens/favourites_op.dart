@@ -20,6 +20,12 @@ class _FavouritesOpState extends State<FavouritesOp> {
   List files = [];
 
   @override
+  void initState() {
+    getFiles(); //call getFiles() function on initial state.
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -35,11 +41,7 @@ class _FavouritesOpState extends State<FavouritesOp> {
                 return Card(
                     child: ListTile(
                   title: Text(files[index].path.split('/').last),
-                  leading: Icon(Icons.picture_as_pdf),
-                  trailing: Icon(
-                    Icons.arrow_forward,
-                    color: Colors.redAccent,
-                  ),
+                  leading: Icon(Icons.image),
                   onTap: () {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) {
@@ -50,19 +52,21 @@ class _FavouritesOpState extends State<FavouritesOp> {
                 ));
               },
             ),
-      floatingActionButton: FloatingActionButton(onPressed: () {
-        captureAndSaveImage;
-        getFiles();
-      }),
+      floatingActionButton: FloatingActionButton(
+          backgroundColor: Colors.black,
+          child: Icon(Icons.add),
+          onPressed: () async {
+            captureAndSaveImage();
+            setState(() {});
+            getFiles();
+          }),
     );
   }
 
-  Future<File?> captureAndSaveImage() async {
-    final pickedImage =
+  captureAndSaveImage() async {
+    final PickedFile? pickedImage =
         await ImagePicker().getImage(source: ImageSource.gallery);
-    setState(() {
-      paths.add(pickedImage!.path);
-    });
+
     if (pickedImage == null) return null;
 
     try {
@@ -91,7 +95,6 @@ class _FavouritesOpState extends State<FavouritesOp> {
   }
 
   void getFiles() async {
-    String path = await _createFolder();
     //asyn function to get list of files
     // final Permission _permissionHandler = Permission();
     // var result =
@@ -99,13 +102,12 @@ class _FavouritesOpState extends State<FavouritesOp> {
     List<StorageInfo> storageInfo = await PathProviderEx.getStorageInfo();
     var root = storageInfo[0]
         .rootDir; //storageInfo[1] for SD card, geting the root directory
-    var fm = FileManager(root: Directory(path)); //
+    var fm = FileManager(root: Directory("storage/emulated/0/Favourites")); //
 
     setState(() async {
       files = await fm.filesTree(
           excludedPaths: ["storage/emulated/0/Favourites"],
-          extensions: ["png"] //optional, to filter files, list only pdf files
-          );
+          extensions: ["png"]);
       print("Files" + files.toString());
     }); //update the UI
   }

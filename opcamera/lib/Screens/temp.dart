@@ -75,12 +75,12 @@ class _MyPDFList extends State<MyPDFList> {
   }
 
   _createFolder() async {
-    final folderName = "Favourites";
+    final folderName = "Facourites";
     var paths = "storage/emulated/0/$folderName";
     final path = Directory(paths);
     if ((await path.exists())) {
       // TODO:
-      return paths;
+      return path.path;
     } else {
       // TODO:
       print("not exist");
