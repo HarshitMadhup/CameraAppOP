@@ -39,66 +39,66 @@ class _AlbumsOpState extends State<AlbumsOp> {
       body: MediaGrid(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          captureAndSaveImage();
-          getFiles();
+          // captureAndSaveImage();
+          // getFiles();
         },
       ),
     );
   }
 
-  Future captureAndSaveImage() async {
-    final pickedImage =
-        await ImagePicker().getImage(source: ImageSource.gallery);
-    setState(() {
-      paths.add(pickedImage.path);
-    });
-    if (pickedImage == null) return null;
+  // Future captureAndSaveImage() async {
+  //   final pickedImage =
+  //       await ImagePicker().getImage(source: ImageSource.gallery);
+  //   setState(() {
+  //     paths.add(pickedImage.path);
+  //   });
+  //   if (pickedImage == null) return null;
 
-    try {
-      final directory = await getExternalStorageDirectory();
-      String path = await _createFolder();
-      if (directory != null) {
-        File(pickedImage.path).copy('${path}/${DateTime.now()}.png');
-        getFiles();
-      }
-    } catch (e) {
-      return null;
-    }
-  }
+  //   try {
+  //     final directory = await getExternalStorageDirectory();
+  //     String path = await _createFolder("");
+  //     if (directory != null) {
+  //       File(pickedImage.path).copy('${path}/${DateTime.now()}.png');
+  //       getFiles();
+  //     }
+  //   } catch (e) {
+  //     return null;
+  //   }
+  // }
 
-  Future<String> _createFolder(String album) async {
-    var paths = "storage/emulated/0/$album";
-    final path = Directory(paths);
-    if ((await path.exists())) {
-      // TODO:
-      return paths;
-    } else {
-      // TODO:
-      print("not exist");
-      path.create();
-      return paths;
-    }
-  }
+  // Future<String> _createFolder(String album) async {
+  //   var paths = "storage/emulated/0/$album";
+  //   final path = Directory(paths);
+  //   if ((await path.exists())) {
+  //     // TODO:
+  //     return paths;
+  //   } else {
+  //     // TODO:
+  //     print("not exist");
+  //     path.create();
+  //     return paths;
+  //   }
+  // }
 
-  void getFiles() async {
-    String path = await _createFolder();
-    //asyn function to get list of files
-    // final Permission _permissionHandler = Permission();
-    // var result =
-    //     await _permissionHandler.requestPermissions([PermissionGroup.contacts]);
-    List<StorageInfo> storageInfo = await PathProviderEx.getStorageInfo();
-    var root = storageInfo[0]
-        .rootDir; //storageInfo[1] for SD card, geting the root directory
-    var fm = FileManager(root: Directory(path)); //
+  // void getFiles() async {
+  //   String path = await _createFolder();
+  //   //asyn function to get list of files
+  //   // final Permission _permissionHandler = Permission();
+  //   // var result =
+  //   //     await _permissionHandler.requestPermissions([PermissionGroup.contacts]);
+  //   List<StorageInfo> storageInfo = await PathProviderEx.getStorageInfo();
+  //   var root = storageInfo[0]
+  //       .rootDir; //storageInfo[1] for SD card, geting the root directory
+  //   var fm = FileManager(root: Directory(path)); //
 
-    setState(() async {
-      files = await fm.filesTree(
-          // excludedPaths: ["storage/emulated/0/Favourites"],
-          extensions: ["png"] //optional, to filter files, list only pdf files
-          );
-      print("Files" + files.toString());
-    }); //update the UI
-  }
+  //   setState(() async {
+  //     files = await fm.filesTree(
+  //         // excludedPaths: ["storage/emulated/0/Favourites"],
+  //         extensions: ["png"] //optional, to filter files, list only pdf files
+  //         );
+  //     print("Files" + files.toString());
+  //   }); //update the UI
+  // }
 }
 
 class MediaGrid extends StatefulWidget {
