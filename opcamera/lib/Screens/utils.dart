@@ -37,6 +37,7 @@ class _GalleryState extends State<Gallery> {
   // This will hold all the assets we fetched
   List<AssetEntity> assets = [];
 
+  List<AssetEntity> newassets = [];
   @override
   void initState() {
     _fetchAssets();
@@ -59,6 +60,12 @@ class _GalleryState extends State<Gallery> {
 
     // Update the state and notify UI
     setState(() => assets = recentAssets);
+
+    setState(() {
+      for (int i = 0; i < assets.length; i++) {
+        if (assets[i].type == AssetType.image) newassets.add(assets[i]);
+      }
+    });
   }
 
   @override

@@ -1,3 +1,4 @@
+// @dart=2.9
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
@@ -8,20 +9,21 @@ import 'package:opcamera/Screens/ImageView.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path_provider_ex/path_provider_ex.dart';
 
-class FavouritesOp extends StatefulWidget {
-  const FavouritesOp();
+class FetchScreen extends StatefulWidget {
+  String path;
+  FetchScreen({this.path});
 
   @override
   _FavouritesOpState createState() => _FavouritesOpState();
 }
 
-class _FavouritesOpState extends State<FavouritesOp> {
+class _FavouritesOpState extends State<FetchScreen> {
   List paths = [];
   List files = [];
 
   @override
   void initState() {
-    getFiles(); //call getFiles() function on initial state.
+    getFiles(widget.path); //call getFiles() function on initial state.
     super.initState();
   }
 
@@ -52,50 +54,10 @@ class _FavouritesOpState extends State<FavouritesOp> {
                 ));
               },
             ),
-      floatingActionButton: FloatingActionButton(onPressed: () {
-        captureAndSaveImage();
-        getFiles();
-      }),
     );
   }
 
-  Future captureAndSaveImage() async {
-    final pickedImage =
-        await ImagePicker().getImage(source: ImageSource.gallery);
-    setState(() {
-      paths.add(pickedImage!.path);
-    });
-    if (pickedImage == null) return null;
-
-    try {
-      final directory = await getExternalStorageDirectory();
-      String path = await _createFolder();
-      if (directory != null) {
-        File(pickedImage.path).copy('${path}/${DateTime.now()}.png');
-        getFiles();
-      }
-    } catch (e) {
-      return null;
-    }
-  }
-
-  Future<String> _createFolder() async {
-    final folderName = "Favourites";
-    var paths = "storage/emulated/0/$folderName";
-    final path = Directory(paths);
-    if ((await path.exists())) {
-      // TODO:
-      return paths;
-    } else {
-      // TODO:
-      print("not exist");
-      path.create();
-      return paths;
-    }
-  }
-
-  void getFiles() async {
-    String path = await _createFolder();
+  void getFiles(String path) async {
     //asyn function to get list of files
     // final Permission _permissionHandler = Permission();
     // var result =
