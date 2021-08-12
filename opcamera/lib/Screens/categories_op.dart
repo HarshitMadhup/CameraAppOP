@@ -8,29 +8,6 @@ class CategoriesOp extends StatefulWidget {
 }
 
 class _CategoriesOpState extends State<CategoriesOp> {
-  createNewFolder(BuildContext context) {
-    TextEditingController myController = TextEditingController();
-
-    return showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: Text("Please enter the name of the new folder"),
-            content: TextField(
-              controller: myController,
-            ),
-            actions: [
-              MaterialButton(
-                child: Text("Submit"),
-                onPressed: () {
-                  Navigator.of(context).pop(myController.text.toString());
-                },
-              )
-            ],
-          );
-        });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,9 +21,7 @@ class _CategoriesOpState extends State<CategoriesOp> {
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.black,
         child: Icon(Icons.add),
-        onPressed: () {
-          createNewFolder(context);
-        },
+        onPressed: () {},
       ),
     );
   }

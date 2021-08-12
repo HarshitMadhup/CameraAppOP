@@ -39,7 +39,8 @@ class _AlbumsOpState extends State<AlbumsOp> {
       body: MediaGrid(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          _createFolder();
+          captureAndSaveImage();
+          getFiles();
         },
       ),
     );
@@ -65,9 +66,8 @@ class _AlbumsOpState extends State<AlbumsOp> {
     }
   }
 
-  Future<String> _createFolder() async {
-    final folderName = "Favourites";
-    var paths = "storage/emulated/0/$folderName";
+  Future<String> _createFolder(String album) async {
+    var paths = "storage/emulated/0/$album";
     final path = Directory(paths);
     if ((await path.exists())) {
       // TODO:
@@ -157,28 +157,5 @@ class Albums extends StatelessWidget {
         child: Text("Album"),
       ),
     );
-  }
-
-  createNewFolder(BuildContext context) {
-    TextEditingController myController = TextEditingController();
-
-    return showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: Text("Please enter the name of the new folder"),
-            content: TextField(
-              controller: myController,
-            ),
-            actions: [
-              MaterialButton(
-                child: Text("Submit"),
-                onPressed: () {
-                  Navigator.of(context).pop(myController.text.toString());
-                },
-              )
-            ],
-          );
-        });
   }
 }
