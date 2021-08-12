@@ -57,8 +57,9 @@ class _FavouritesOpState extends State<FavouritesOp> {
           child: Icon(Icons.add),
           onPressed: () async {
             captureAndSaveImage();
-            setState(() {});
-            getFiles();
+            setState(() {
+              getFiles();
+            });
           }),
     );
   }
