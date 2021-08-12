@@ -27,7 +27,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
         onTap: (index) => setState(() => currentIndex = index),
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.menu_book),
+            icon: Icon(Icons.photo_album),
             label: 'Albums',
           ),
           BottomNavigationBarItem(

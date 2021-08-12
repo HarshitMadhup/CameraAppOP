@@ -38,6 +38,8 @@ class _AlbumsOpState extends State<AlbumsOp> {
       ),
       body: MediaGrid(),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.black,
+        child: Icon(Icons.add),
         onPressed: () {
           // captureAndSaveImage();
           // getFiles();

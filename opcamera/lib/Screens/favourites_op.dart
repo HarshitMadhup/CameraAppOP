@@ -52,10 +52,13 @@ class _FavouritesOpState extends State<FavouritesOp> {
                 ));
               },
             ),
-      floatingActionButton: FloatingActionButton(onPressed: () {
-        captureAndSaveImage();
-        getFiles();
-      }),
+      floatingActionButton: FloatingActionButton(
+          backgroundColor: Colors.black,
+          child: Icon(Icons.add),
+          onPressed: () {
+            captureAndSaveImage();
+            getFiles();
+          }),
     );
   }
 
