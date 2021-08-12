@@ -21,7 +21,6 @@ class _MyPDFList extends State<MyPDFList> {
   var files;
 
   void getFiles() async {
-    String path = await _createFolder();
     //asyn function to get list of files
     // final Permission _permissionHandler = Permission();
     // var result =
@@ -29,7 +28,7 @@ class _MyPDFList extends State<MyPDFList> {
     List<StorageInfo> storageInfo = await PathProviderEx.getStorageInfo();
     var root = storageInfo[0]
         .rootDir; //storageInfo[1] for SD card, geting the root directory
-    var fm = FileManager(root: Directory(path)); //
+    var fm = FileManager(root: Directory(root)); //
     files = await fm.filesTree(
         excludedPaths: ["/storage/emulated/0/Android"],
         extensions: ["png"] //optional, to filter files, list only pdf files
@@ -75,7 +74,7 @@ class _MyPDFList extends State<MyPDFList> {
               ));
   }
 
-  Future<String> _createFolder() async {
+  _createFolder() async {
     final folderName = "Favourites";
     var paths = "storage/emulated/0/$folderName";
     final path = Directory(paths);

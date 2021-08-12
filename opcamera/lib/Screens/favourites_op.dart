@@ -20,12 +20,6 @@ class _FavouritesOpState extends State<FavouritesOp> {
   List files = [];
 
   @override
-  void initState() {
-    getFiles(); //call getFiles() function on initial state.
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -41,7 +35,11 @@ class _FavouritesOpState extends State<FavouritesOp> {
                 return Card(
                     child: ListTile(
                   title: Text(files[index].path.split('/').last),
-                  leading: Icon(Icons.image),
+                  leading: Icon(Icons.picture_as_pdf),
+                  trailing: Icon(
+                    Icons.arrow_forward,
+                    color: Colors.redAccent,
+                  ),
                   onTap: () {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) {
@@ -52,17 +50,14 @@ class _FavouritesOpState extends State<FavouritesOp> {
                 ));
               },
             ),
-      floatingActionButton: FloatingActionButton(
-          backgroundColor: Colors.black,
-          child: Icon(Icons.add),
-          onPressed: () {
-            captureAndSaveImage();
-            getFiles();
-          }),
+      floatingActionButton: FloatingActionButton(onPressed: () {
+        captureAndSaveImage;
+        getFiles();
+      }),
     );
   }
 
-  Future captureAndSaveImage() async {
+  Future<File?> captureAndSaveImage() async {
     final pickedImage =
         await ImagePicker().getImage(source: ImageSource.gallery);
     setState(() {
@@ -73,10 +68,8 @@ class _FavouritesOpState extends State<FavouritesOp> {
     try {
       final directory = await getExternalStorageDirectory();
       String path = await _createFolder();
-      if (directory != null) {
-        File(pickedImage.path).copy('${path}/${DateTime.now()}.png');
-        getFiles();
-      }
+      if (directory != null)
+        return File(pickedImage.path).copy('${path}/${DateTime.now()}.png');
     } catch (e) {
       return null;
     }
@@ -110,7 +103,7 @@ class _FavouritesOpState extends State<FavouritesOp> {
 
     setState(() async {
       files = await fm.filesTree(
-          // excludedPaths: ["storage/emulated/0/Favourites"],
+          excludedPaths: ["storage/emulated/0/Favourites"],
           extensions: ["png"] //optional, to filter files, list only pdf files
           );
       print("Files" + files.toString());
