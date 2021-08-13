@@ -7,8 +7,9 @@ import 'package:photofilters/photofilters.dart';
 import 'package:image/image.dart' as imageLib;
 
 class ImageView extends StatefulWidget {
+  bool isTemp;
   final String? path;
-  ImageView({this.path});
+  ImageView({this.path, required this.isTemp});
 
   @override
   _ImageViewState createState() => _ImageViewState();
@@ -78,6 +79,14 @@ class _ImageViewState extends State<ImageView> {
                       textAlign: TextAlign.left,
                     ),
                   ),
+                  widget.isTemp
+                      ? IconButton(
+                          icon: Icon(Icons.delete),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                        )
+                      : Container(),
                   GestureDetector(
                     onTap: () => _getImage(context),
                     child: Icon(

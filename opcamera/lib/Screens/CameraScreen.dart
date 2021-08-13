@@ -62,18 +62,19 @@ class _CameraScreenState extends State<CameraScreen> {
     final path = join((await getApplicationDocumentsDirectory()).path,
         "${DateTime.now()}.png");
     XFile picture = await _cameraController.takePicture();
-    picture.saveTo(path);
-    GallerySaver.saveImage(
-      picture.path,
-    ).then((bool success) {
-      print("success");
-    });
+    // picture.saveTo(path);
+    // GallerySaver.saveImage(
+    //   picture.path,
+    // ).then((_) {
+    //   print("success");
+    // });
 
     Navigator.push(
       context,
       MaterialPageRoute(
         builder: (builder) => ImageView(
           path: path,
+          isTemp: true,
         ),
       ),
     );

@@ -54,7 +54,8 @@ class _FavouritesOpState extends State<FavouritesOp> {
                   onTap: () {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) {
-                      return ImageView(path: files[index].path.toString());
+                      return ImageView(
+                          path: files[index].path.toString(), isTemp: false);
                       //open viewPDF page on click
                     }));
                   },

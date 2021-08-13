@@ -37,14 +37,6 @@ class _AlbumsOpState extends State<AlbumsOp> {
         backgroundColor: Colors.black,
       ),
       body: MediaGrid(),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.black,
-        child: Icon(Icons.add),
-        onPressed: () {
-          // captureAndSaveImage();
-          // getFiles();
-        },
-      ),
     );
   }
 
@@ -133,10 +125,7 @@ class _MediaGridState extends State<MediaGrid> {
       setState(() {
         _mediaList = media;
       });
-    } else {
-      // fail
-      /// if result is fail, you can call `PhotoManager.openSetting();`  to open android/ios applicaton's setting to get permission
-    }
+    } else {}
   }
 
   @override
