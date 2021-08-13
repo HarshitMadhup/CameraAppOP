@@ -29,6 +29,15 @@ class _FavouritesOpState extends State<FavouritesOp> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        actions: [
+          IconButton(
+              onPressed: () {
+                setState(() {
+                  getFiles();
+                });
+              },
+              icon: Icon(Icons.refresh))
+        ],
         title: Text("Favourites"),
         backgroundColor: Colors.black,
       ),
