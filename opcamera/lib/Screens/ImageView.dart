@@ -52,75 +52,50 @@ class _ImageViewState extends State<ImageView> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        appBar: AppBar(backgroundColor: Colors.black, actions: [
+          widget.isTemp
+              ? IconButton(
+                  icon: Icon(Icons.delete),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  color: Colors.white,
+                )
+              : Container(),
+          GestureDetector(
+            onTap: () => _getImage(context),
+            child: Icon(
+              Icons.edit,
+              color: Colors.white,
+              size: 28.0,
+            ),
+          ),
+        ]),
         backgroundColor: Colors.black,
-        body: Column(
-          children: [
-            Container(
-              padding:
-                  const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
-              color: Colors.black,
-              child: Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  GestureDetector(
-                    onTap: () => Navigator.pop(context),
-                    child: Icon(
-                      Icons.arrow_back,
-                      color: Colors.white,
-                      size: 28.0,
+        body: Center(
+          child: Container(
+            child: imageFile == null
+                ? Image.file(
+                    File(
+                      widget.path.toString(),
                     ),
+                    fit: BoxFit.contain,
+                  )
+                : Image.file(
+                    new File(imageFile!.path),
+                    fit: BoxFit.contain,
                   ),
-                  Container(
-                    width: 250.0,
-                    child: Text(
-                      "${widget.path}",
-                      style: TextStyle(fontSize: 12.0, color: Colors.white),
-                      textAlign: TextAlign.left,
-                    ),
-                  ),
-                  widget.isTemp
-                      ? IconButton(
-                          icon: Icon(Icons.delete),
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                        )
-                      : Container(),
-                  GestureDetector(
-                    onTap: () => _getImage(context),
-                    child: Icon(
-                      Icons.edit,
-                      color: Colors.white,
-                      size: 28.0,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Expanded(
-              child: Container(
-                child: imageFile == null
-                    ? Image.file(
-                        File(
-                          widget.path.toString(),
-                        ),
-                        fit: BoxFit.contain,
-                      )
-                    : Image.file(
-                        new File(imageFile!.path),
-                        fit: BoxFit.contain,
-                      ),
-              ),
-            ),
-          ],
+          ),
         ),
         floatingActionButton: FloatingActionButton(
           backgroundColor: Colors.black,
           child: Icon(Icons.save),
           onPressed: () async {
-            GallerySaver.saveImage(imageFile!.path)
-                .then((success) => print("success"));
+            imageFile == null
+                ? GallerySaver.saveImage(widget.path!)
+                    .then((success) => print("success"))
+                : GallerySaver.saveImage(imageFile!.path)
+                    .then((success) => print("success"));
           },
         ),
       ),

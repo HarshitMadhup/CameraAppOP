@@ -62,7 +62,7 @@ class _CameraScreenState extends State<CameraScreen> {
     final path = join((await getApplicationDocumentsDirectory()).path,
         "${DateTime.now()}.png");
     XFile picture = await _cameraController.takePicture();
-    // picture.saveTo(path);
+    picture.saveTo(path);
     // GallerySaver.saveImage(
     //   picture.path,
     // ).then((_) {
