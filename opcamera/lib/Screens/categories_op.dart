@@ -90,13 +90,7 @@ class _CategoriesOpState extends State<CategoriesOp> {
           )
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.black,
-        child: Icon(Icons.add),
-        onPressed: () {
-          createNewFolder(context);
-        },
-      ),
+      
     );
   }
 }
