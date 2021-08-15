@@ -93,9 +93,9 @@ class _ImageViewState extends State<ImageView> {
           onPressed: () async {
             imageFile == null
                 ? GallerySaver.saveImage(widget.path!)
-                    .then((success) => print("success"))
+                    .then((success) => Navigator.pop(context))
                 : GallerySaver.saveImage(imageFile!.path)
-                    .then((success) => print("success"));
+                    .then((success) => Navigator.pop(context));
           },
         ),
       ),

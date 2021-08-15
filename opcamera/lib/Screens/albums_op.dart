@@ -1,12 +1,7 @@
 // @dart=2.9
 import 'dart:io';
-import 'dart:typed_data';
 
-import 'package:flutter_file_manager/flutter_file_manager.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:opcamera/Screens/utils.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:path_provider_ex/path_provider_ex.dart';
 import 'package:photo_manager/photo_manager.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
