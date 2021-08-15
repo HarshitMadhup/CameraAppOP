@@ -54,24 +54,31 @@ class _ImageViewState extends State<ImageView> {
       child: Scaffold(
         appBar: AppBar(backgroundColor: Colors.black, actions: [
           widget.isTemp
-              ? IconButton(
-                  icon: Icon(Icons.delete),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  color: Colors.white,
+              ? Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: GestureDetector(
+                    onTap: () => Navigator.of(context).pop(),
+                    child: Icon(
+                      Icons.delete,
+                      color: Colors.white,
+                      size: 28.0,
+                    ),
+                  ),
                 )
               : Container(),
-          GestureDetector(
-            onTap: () => _getImage(context),
-            child: Icon(
-              Icons.edit,
-              color: Colors.white,
-              size: 28.0,
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: GestureDetector(
+              onTap: () => _getImage(context),
+              child: Icon(
+                Icons.edit,
+                color: Colors.white,
+                size: 28.0,
+              ),
             ),
           ),
         ]),
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.white,
         body: Center(
           child: Container(
             child: imageFile == null

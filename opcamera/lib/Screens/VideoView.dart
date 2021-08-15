@@ -30,7 +30,7 @@ class _VideoViewState extends State<VideoView> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.white,
         body: Column(
           children: [
             Container(
